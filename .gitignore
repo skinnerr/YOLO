@@ -1,2 +1,8 @@
 .ipynb_checkpoints/
 .gitignore
+data/*
+
+*.iml
+.idea/*
+
+
