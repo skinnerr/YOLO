@@ -1,0 +1,6 @@
+classes= 4
+train  = /usr/share/Github/darknet/udacitydata/train.txt
+valid  = /usr/share/Github/darknet/udacitydata/train.txt
+names = data/udacity.names
+backup = backup
+
