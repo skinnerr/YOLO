@@ -2,8 +2,9 @@ import pandas as pd
 import os
 from os import getcwd
 from os.path import join
+from sklearn.model_selection import train_test_split
 
-sets=[('object-detection-crowdai', 'train', 'labels_crowdai.csv')]
+sets=[('object-detection-crowdai', 'labels_crowdai.csv')]
 
 classes = ['Car', 'Truck', 'Pedestrian', 'Street Lights`']
 
@@ -40,17 +41,21 @@ def convert_annotation(data_source, image_file, objects_df):
 
 wd = getcwd()
 
-for data_source, image_set, label_file in sets:
+
+for data_source, label_file in sets:
 	in_file_df = pd.read_csv(label_file)
 	directory_name = 'udacitydata/%s/labels/' % data_source
 	if not os.path.exists(directory_name):
 		os.makedirs(directory_name)
-	list_file = open('%s_%s.txt' % (data_source, image_set), 'w')
-	for image_file, objects_df in in_file_df.groupby('Frame'):
-		image_id = os.path.splitext(image_file)[0]
-		list_file.write('%s/udacitydata/%s/%s\n' % (wd, data_source, image_file))
-		convert_annotation(data_source, image_id, objects_df)
-	list_file.close()
+	
+	train, valid = train_test_split(list(in_file_df.groupby('Frame')),test_size=0.2)
+	for set_name, image_set in zip(('train', 'valid'),(train, valid)):
+		list_file = open('%s_%s.txt' % (data_source, set_name), 'w')
+		for image_file, objects_df in image_set:
+			image_id = os.path.splitext(image_file)[0]
+			list_file.write('%s/udacitydata/%s/%s\n' % (wd, data_source, image_file))
+			convert_annotation(data_source, image_id, objects_df)
+		list_file.close()
 
 #os.system("percsplit train.txt 80 20")
 
