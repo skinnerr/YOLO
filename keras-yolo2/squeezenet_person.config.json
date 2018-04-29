@@ -1,0 +1,37 @@
+{
+    "model" : {
+        "backend":              "SqueezeNet",
+        "input_size":           416,
+        "anchors":              [0.29, 0.99, 0.39, 1.09, 0.40, 1.45, 0.51, 1.65, 0.70, 1.98],
+        "max_box_per_image":    10,        
+        "labels":               ["person"],
+        "threshold":            0.3
+    },
+
+    "train": {
+        "train_image_folder":   "./data/caltech_pedestrians/sample_images_4500/",
+        "train_annot_folder":   "./data/caltech_pedestrians/sample_annots_4500/",
+          
+        "train_times":          8,
+        "pretrained_weights":   "squeezenet_raccoon.h5",
+        "batch_size":           4,
+        "learning_rate":        1e-4,
+        "nb_epochs":            100,
+        "warmup_epochs":        3,
+
+        "object_scale":         5.0 ,
+        "no_object_scale":      1.0,
+        "coord_scale":          1.0,
+        "class_scale":          1.0,
+
+        "saved_weights_name":   "squeezenet_person_4500.h5",
+        "debug":                true
+    },
+
+    "valid": {
+        "valid_image_folder":   "",
+        "valid_annot_folder":   "",
+
+        "valid_times":          1
+    }
+}

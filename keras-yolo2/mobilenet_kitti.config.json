@@ -1,0 +1,37 @@
+{
+    "model" : {
+        "backend":              "MobileNet",
+        "input_size":           416,
+        "anchors":              [0.40,0.93, 0.84,1.72, 1.58,2.92, 2.37,5.26, 3.69,6.64],
+        "max_box_per_image":    10,        
+        "labels":               ["Car"],
+	"threshold":		0.3
+    },
+
+    "train": {
+        "train_image_folder":   "./data/kitti_cars/sample_images_2400/",
+        "train_annot_folder":   "./data/kitti_cars/sample_annots_2400/",     
+          
+        "train_times":          8,
+        "pretrained_weights":   "mobilenet_raccoon.h5",
+        "batch_size":           4,
+        "learning_rate":        1e-4,
+        "nb_epochs":            100,
+        "warmup_epochs":        3,
+
+        "object_scale":         5.0 ,
+        "no_object_scale":      1.0,
+        "coord_scale":          1.0,
+        "class_scale":          1.0,
+
+        "saved_weights_name":   "mobilenet_kitti_cars_2400.h5",
+        "debug":                true
+    },
+
+    "valid": {
+        "valid_image_folder":   "",
+        "valid_annot_folder":   "",
+
+        "valid_times":          1
+    }
+}
